@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <title>VISIONARY // STUDIO</title>
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@700&family=Inter:wght@400;900&display=swap" rel="stylesheet">
+    <style>
+        body { background-color: #000; color: #fff; font-family: 'Inter', sans-serif; overflow-x: hidden; }
+        .sync { font-family: 'Syncopate', sans-serif; }
+        
+        /* Moving Text Marquee */
+        .marquee {
+            display: flex;
+            overflow: hidden;
+            user-select: none;
+            gap: 2rem;
+            border-top: 1px solid #333;
+            border-bottom: 1px solid #333;
+            padding: 20px 0;
+            background: #050505;
+        }
+        .marquee-content {
+            flex-shrink: 0;
+            display: flex;
+            justify-content: space-around;
+            min-width: 100%;
+            gap: 2rem;
+            animation: scroll 20s linear infinite;
+        }
+        @keyframes scroll {
+            from { transform: translateX(0); }
+            to { transform: translateX(-100%); }
+        }
+
+        /* --- BENTO GRID RESPONSIVE FIX --- */
+        .bento-grid {
+            display: grid;
+            /* Yahan change hai: Mobile par 1 column, Desktop par 3 */
+            grid-template-columns: 1fr;
+            gap: 1px;
+            background-color: rgba(255, 255, 255, 0.1); 
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            width: 100%;
+        }
+        @media (min-width: 768px) {
+            .bento-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+
+        .bento-item { 
+            background-color: #000; 
+            padding: 30px; 
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); 
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 250px;
+        }
+        @media (min-width: 768px) {
+            .bento-item { padding: 50px; }
+        }
+
+        /* Hover & Active State */
+        .bento-item:hover, .bento-item:active { background-color: #ffffff; }
+        .bento-item:hover h3, .bento-item:hover p, .bento-item:hover span,
+        .bento-item:active h3, .bento-item:active p, .bento-item:active span { 
+            color: #000 !important; 
+        }
+
+        /* Pricing Card */
+        .price-card {
+            border: 1px solid #222;
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .price-card:hover {
+            background-color: #fff;
+            color: #000;
+            transform: translateY(-5px);
+        }
+
+        /* Hero Text scaling for small screens */
+        .hero-title {
+            font-size: clamp(2.8rem, 12vw, 8rem);
+            line-height: 1;
+        }
+
+/* Zoom disable aur base styling */
+.project-img {
+    transform: none !important; /* Zoom khatam */
+    transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Jab JS se 'active-project' class lagegi */
+.active-project img {
+    filter: grayscale(0) !important;
+    opacity: 1 !important;
+}
+
+.active-project .overlay-bg {
+    opacity: 0.4 !important;
+}
+
+.active-project .text-box {
+    transform: translateY(0) !important;
+}
+
+.active-project .project-line {
+    width: 100% !important;
+}
+
+/* Desktop Hover (Same behavior) */
+@media (hover: hover) {
+    .group:hover img { filter: grayscale(0); opacity: 1; }
+    .group:hover .overlay-bg { opacity: 0.4; }
+    .group:hover .text-box { transform: translateY(0); }
+    .group:hover .project-line { width: 100%; }
+}
+
+
+/* --- PRICING/INVESTMENT UPDATED CSS --- */
+
+/* Base Card Style */
+.price-card {
+    border: 1px solid #222;
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    background-color: #000;
+}
+
+/* Card Hover: Background white ho jayega */
+.price-card:hover {
+    background-color: #fff !important;
+    transform: translateY(-5px);
+}
+
+/* Text Colors on Hover: Jab card hover ho toh text black ho jaye */
+.price-card:hover h4, 
+.price-card:hover .text-6xl, 
+.price-card:hover .text-5xl,
+.price-card:hover p, 
+.price-card:hover ul li {
+    color: #000 !important;
+}
+
+/* Button Fix: Card hover par button black background aur white text ke saath fit ho jaye */
+.price-card button {
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.4s ease;
+}
+
+.price-card:hover button {
+    background-color: #000 !important;
+    color: #fff !important;
+    border-color: #000 !important;
+}
+
+/* Mobile Specific Fixes (Gaps kam karne ke liye) */
+@media (max-width: 768px) {
+    #pricing {
+        padding-top: 40px !important;
+        padding-bottom: 40px !important;
+    }
+    
+    .price-card, .bg-indigo-600 {
+        height: auto !important;
+        min-height: 400px; /* Ek standard height rakhi hai */
+        padding: 35px 25px !important;
+    }
+
+    #pricing .grid {
+        gap: 20px !important; /* Cards ke darmiyan gap set kiya */
+    }
+
+    .price-card:hover {
+        transform: none !important; /* Mobile pe bounce effect hata diya focus ke liye */
+    }
+}
+
+/* Indigo Card Hover Fix (Optional: Agar aap iska hover bhi chahte hain) */
+.bg-indigo-600 button:hover {
+    background-color: #000 !important;
+    color: #fff !important;
+}
+    </style>
+</head>
+<body>
+
+    <nav class="flex justify-between items-center px-6 py-6 border-b border-white/10 sticky top-0 bg-black/80 backdrop-blur-lg z-50">
+        <div class="sync text-xl tracking-tighter">VSNY<span class="text-indigo-500">.</span></div>
+        <div class="hidden md:flex gap-10 text-[10px] font-black uppercase tracking-[0.3em]">
+            <a href="#work">Work</a>
+            <a href="#services">Services</a>
+            <a href="#pricing">Pricing</a>
+        </div>
+        <a href="#contact" class="bg-white text-black px-6 py-2 text-[10px] font-black uppercase tracking-widest hover:bg-indigo-500 hover:text-white transition inline-block">
+    Inquire
+</a>
+    </nav>
+
+    <section class="py-20 md:py-40 px-6 text-center">
+        <h1 class="sync hero-title tracking-tighter mb-10">
+            HIGH<br/><span class="text-indigo-500 italic">OUTPUT.</span>
+        </h1>
+        <p class="max-w-2xl mx-auto text-white/40 text-xs md:text-sm leading-loose uppercase tracking-[0.4em]">
+            Premium visual assets for brands that play to win.
+        </p>
+    </section>
+
+    <div class="marquee">
+        <div class="marquee-content">
+            <span class="sync text-2xl">CINEMATIC • EDITORIAL • BRANDING • STRATEGY • </span>
+            <span class="sync text-2xl">CINEMATIC • EDITORIAL • BRANDING • STRATEGY • </span>
+        </div>
+    </div>
+
+    <section id="services" class="max-w-full mx-auto mt-20">
+        <div class="bento-grid">
+            <div class="bento-item group">
+                <div class="h-40 flex flex-col justify-between">
+                    <span class="text-indigo-500 font-black">01/</span>
+                    <h3 class="sync text-2xl">Visual Cinema</h3>
+                    <p class="text-white/40 text-xs uppercase tracking-widest group-hover:text-white transition">8K Production for Brand Films.</p>
+                </div>
+            </div>
+            <div class="bento-item group">
+                <div class="h-40 flex flex-col justify-between">
+                    <span class="text-indigo-500 font-black">02/</span>
+                    <h3 class="sync text-2xl">Editorial</h3>
+                    <p class="text-white/40 text-xs uppercase tracking-widest group-hover:text-white transition">Commercial Grade Stills.</p>
+                </div>
+            </div>
+            <div class="bento-item group">
+                <div class="h-40 flex flex-col justify-between">
+                    <span class="text-indigo-500 font-black">03/</span>
+                    <h3 class="sync text-2xl">Directing</h3>
+                    <p class="text-white/40 text-xs uppercase tracking-widest group-hover:text-white transition">Creative Lead & Vision.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+   <section id="work" class="py-24 px-4 sm:px-6 border-t border-white/5">
+    <div class="max-w-full mx-auto">
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 gap-4 px-2">
+            <div>
+                <span class="text-[9px] font-black text-indigo-500 tracking-[0.6em] uppercase block mb-2">Portfolio</span>
+                <h2 class="sync text-3xl md:text-5xl lg:text-6xl tracking-tighter leading-tight">
+                    ARCHIVE <br class="hidden md:block"/> 
+                    <span class="text-white/20" style="-webkit-text-stroke: 1px white;">01-03.</span>
+                </h2>
+            </div>
+            <p class="text-[10px] text-white/40 uppercase tracking-[0.3em] max-w-[200px] leading-relaxed">
+                Selected high-impact visual productions.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-1 bg-white/10 border border-white/10">
+            <div class="project-card group relative aspect-[4/5] md:aspect-[3/4] overflow-hidden bg-black cursor-pointer">
+                <img src="cinematography.jpg" 
+                     class="project-img w-full h-full object-cover transition-all duration-700 ease-out grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100">
+                
+                <div class="overlay-bg absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent opacity-80 group-hover:opacity-40 transition-opacity"></div>
+                
+                <div class="text-box absolute bottom-0 left-0 w-full p-8 translate-y-2 group-hover:translate-y-0 transition-transform pointer-events-none">
+                    <span class="text-indigo-500 font-black text-[9px] tracking-widest uppercase mb-1 block">Phase 01</span>
+                    <h3 class="sync text-xl md:text-2xl tracking-tighter">CINEMATOGRAPHY</h3>
+                    <div class="project-line h-[1px] w-0 group-hover:w-full bg-indigo-500 transition-all duration-500 mt-4"></div>
+                </div>
+            </div>
+
+            <div class="project-card group relative aspect-[4/5] md:aspect-[3/4] overflow-hidden bg-black cursor-pointer">
+                <img src="vision.jpg" 
+                     class="project-img w-full h-full object-cover transition-all duration-700 ease-out grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100">
+                
+                <div class="overlay-bg absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent opacity-80 group-hover:opacity-40 transition-opacity"></div>
+                
+                <div class="text-box absolute bottom-0 left-0 w-full p-8 translate-y-2 group-hover:translate-y-0 transition-transform pointer-events-none">
+                    <span class="text-indigo-500 font-black text-[9px] tracking-widest uppercase mb-1 block">Phase 02</span>
+                    <h3 class="sync text-xl md:text-2xl tracking-tighter">VISION X GRAPHICS</h3>
+                    <div class="project-line h-[1px] w-0 group-hover:w-full bg-indigo-500 transition-all duration-500 mt-4"></div>
+                </div>
+            </div>
+
+            <div class="project-card group relative aspect-[4/5] md:aspect-[3/4] overflow-hidden bg-black cursor-pointer">
+                <img src="urban.jpg" 
+                     class="project-img w-full h-full object-cover transition-all duration-700 ease-out grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100">
+                
+                <div class="overlay-bg absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent opacity-80 group-hover:opacity-40 transition-opacity"></div>
+                
+                <div class="text-box absolute bottom-0 left-0 w-full p-8 translate-y-2 group-hover:translate-y-0 transition-transform pointer-events-none">
+                    <span class="text-indigo-500 font-black text-[9px] tracking-widest uppercase mb-1 block">Phase 03</span>
+                    <h3 class="sync text-xl md:text-2xl tracking-tighter">URBAN CHAOS</h3>
+                    <div class="project-line h-[1px] w-0 group-hover:w-full bg-indigo-500 transition-all duration-500 mt-4"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    /* JavaScript se jab is class ko toggle karenge to ye apply hoga */
+    .is-active .project-img { filter: grayscale(0) !important; opacity: 1 !important; }
+    .is-active .overlay-bg { opacity: 0.4 !important; }
+    .is-active .text-box { transform: translateY(0) !important; }
+    .is-active .project-line { width: 100% !important; }
+</style>
+
+<script>
+    document.querySelectorAll('.project-card').forEach(card => {
+        card.addEventListener('click', function() {
+            // Doosre saare cards se color hatao
+            document.querySelectorAll('.project-card').forEach(c => {
+                if (c !== this) c.classList.remove('is-active');
+            });
+            // Is card par color toggle karo
+            this.classList.toggle('is-active');
+        });
+    });
+</script>
+
+<section id="pricing" class="py-24 px-6">
+    <div class="max-w-6xl mx-auto">
+        <h2 class="sync text-3xl md:text-4xl mb-12 md:mb-20 text-center uppercase tracking-tighter">Investment</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+            
+            <div class="price-card group p-10 flex flex-col justify-between h-auto md:h-[500px]">
+                <div>
+                    <h4 class="sync text-[10px] mb-4 text-indigo-500 transition-colors group-hover:text-black/40">Starter</h4>
+                    <div class="text-5xl md:text-6xl font-black tracking-tighter mb-4 md:mb-6 transition-colors group-hover:text-black">$499</div>
+                    <p class="text-[9px] uppercase font-bold tracking-widest opacity-50 mb-6 transition-colors group-hover:text-black/60">Single Content Day</p>
+                </div>
+                <ul class="text-[9px] uppercase tracking-widest space-y-3 font-bold opacity-70 mb-8 transition-colors group-hover:text-black/80">
+                    <li>• 4 Hour Production</li>
+                    <li>• 15 Retouched Assets</li>
+                    <li>• 4K Delivery</li>
+                </ul>
+                <button class="w-full py-4 border border-white/20 text-[9px] font-black uppercase tracking-widest transition-all 
+                               group-hover:bg-black group-hover:text-white group-hover:border-black">
+                    Select
+                </button>
+            </div>
+
+            <div class="bg-indigo-600 p-10 flex flex-col justify-between h-auto md:h-[500px] shadow-2xl md:scale-105 relative z-10">
+                <div>
+                    <h4 class="sync text-[10px] mb-4 text-white/80">Pro Film</h4>
+                    <div class="text-5xl md:text-6xl font-black tracking-tighter mb-4 md:mb-6">$1,299</div>
+                    <p class="text-[9px] uppercase font-bold tracking-widest text-white/70 mb-6">Full Scale Brand Asset</p>
+                </div>
+                <ul class="text-[9px] uppercase tracking-widest space-y-3 font-bold mb-8 text-white/90">
+                    <li>• 8 Hour Production</li>
+                    <li>• Master Brand Film</li>
+                    <li>• Sound Design</li>
+                </ul>
+                <button class="w-full py-4 bg-white text-black text-[9px] font-black uppercase tracking-widest hover:bg-black hover:text-white transition-all">
+                    Book Now
+                </button>
+            </div>
+
+            <div class="price-card group p-10 flex flex-col justify-between h-auto md:h-[500px]">
+                <div>
+                    <h4 class="sync text-[10px] mb-4 text-indigo-500 transition-colors group-hover:text-black/40">Retainer</h4>
+                    <div class="text-5xl md:text-6xl font-black tracking-tighter mb-4 md:mb-6 transition-colors group-hover:text-black">$2,500</div>
+                    <p class="text-[9px] uppercase font-bold tracking-widest opacity-50 mb-6 transition-colors group-hover:text-black/60">Growth Partner</p>
+                </div>
+                <ul class="text-[9px] uppercase tracking-widest space-y-3 font-bold opacity-70 mb-8 transition-colors group-hover:text-black/80">
+                    <li>• Monthly Content Cycle</li>
+                    <li>• Priority Scheduling</li>
+                    <li>• Strategy Access</li>
+                </ul>
+                <button class="w-full py-4 border border-white/20 text-[9px] font-black uppercase tracking-widest transition-all 
+                               group-hover:bg-black group-hover:text-white group-hover:border-black">
+                    Select
+                </button>
+            </div>
+            
+        </div>
+    </div>
+</section>
+
+    <section id="contact" class="py-24 px-6 sm:px-12 lg:px-20 bg-black">
+        <div class="max-w-5xl mx-auto">
+            <div class="mb-16 border-l-2 border-indigo-500 pl-6 md:pl-10">
+                <span class="text-[10px] font-black text-indigo-500 tracking-[0.5em] uppercase">Project Initiation</span>
+                <h2 class="sync text-4xl md:text-6xl lg:text-7xl mt-4 tracking-tighter leading-none">
+                    Start the <br/> <span class="text-white/20" style="-webkit-text-stroke: 1px white;">Takeover.</span>
+                </h2>
+            </div>
+            <form action="#" class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-10">
+                <div class="relative group">
+                    <label class="text-[9px] font-black uppercase tracking-[0.3em] text-white/30 group-focus-within:text-indigo-500 transition-colors">Client Name / Agency</label>
+                    <input type="text" required placeholder="E.G. JOHN DOE" class="w-full bg-transparent border-b border-white/10 py-4 text-xs md:text-sm tracking-widest uppercase focus:outline-none focus:border-indigo-500 transition-all placeholder:text-white/5">
+                </div>
+                <div class="relative group">
+                    <label class="text-[9px] font-black uppercase tracking-[0.3em] text-white/30 group-focus-within:text-indigo-500 transition-colors">Electronic Mail</label>
+                    <input type="email" required placeholder="HELLO@STUDIO.COM" class="w-full bg-transparent border-b border-white/10 py-4 text-xs md:text-sm tracking-widest uppercase focus:outline-none focus:border-indigo-500 transition-all placeholder:text-white/5">
+                </div>
+                <div class="relative group md:col-span-2">
+                    <label class="text-[9px] font-black uppercase tracking-[0.3em] text-white/30 group-focus-within:text-indigo-500 transition-colors">Objective</label>
+                    <select required class="w-full bg-transparent border-b border-white/10 py-4 text-xs md:text-sm tracking-widest uppercase focus:outline-none focus:border-indigo-500 transition-all appearance-none cursor-pointer">
+                        <option class="bg-black" value="" disabled selected>Select Service Tier</option>
+                        <option class="bg-black" value="cinema">Cinema Production (Phase II)</option>
+                        <option class="bg-black" value="editorial">Editorial Photography</option>
+                        <option class="bg-black" value="retainer">Monthly Creative Retainer</option>
+                        <option class="bg-black" value="other">Other / Custom Vision</option>
+                    </select>
+                </div>
+                <div class="relative group md:col-span-2">
+                    <label class="text-[9px] font-black uppercase tracking-[0.3em] text-white/30 group-focus-within:text-indigo-500 transition-colors">Vision Brief</label>
+                    <textarea rows="4" required placeholder="DESCRIBE THE IMPACT YOU WANT TO CREATE..." class="w-full bg-transparent border-b border-white/10 py-4 text-xs md:text-sm tracking-widest uppercase focus:outline-none focus:border-indigo-500 transition-all resize-none placeholder:text-white/5"></textarea>
+                </div>
+                <div class="md:col-span-2 pt-6">
+                    <button type="submit" class="group relative w-full md:w-max overflow-hidden bg-white px-12 py-5 transition-all hover:bg-indigo-600 active:scale-95">
+                        <span class="relative z-10 sync text-[10px] text-black group-hover:text-white tracking-[0.4em]">Transmit Brief</span>
+                        <div class="absolute inset-0 bg-gradient-to-r from-indigo-600 to-purple-600 translate-y-full group-hover:translate-y-0 transition-transform duration-500"></div>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <footer class="bg-black border-t border-white/10 pt-20 pb-10 px-6 sm:px-12 lg:px-16">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-20">
+                <div class="lg:col-span-5 space-y-6">
+                    <div class="sync text-2xl md:text-3xl tracking-tighter cursor-default">VISIONARY<span class="text-indigo-500">®</span></div>
+                    <p class="text-white/40 text-[10px] uppercase tracking-[0.2em] leading-relaxed max-w-sm">Engineering visual dominance for the next generation of industry leaders.</p>
+                </div>
+                <div class="lg:col-span-3">
+                    <h4 class="sync text-[9px] mb-6 text-white/20 tracking-[0.3em]">Directory</h4>
+                    <ul class="space-y-4 text-[10px] font-bold uppercase tracking-widest text-white/50">
+                        <li><a href="#work" class="hover:text-white transition-all">Portfolios</a></li>
+                        <li><a href="#services" class="hover:text-white transition-all">Capabilities</a></li>
+                    </ul>
+                </div>
+                <div class="lg:col-span-4 space-y-8">
+                    <h4 class="sync text-[9px] mb-6 text-white/20 tracking-[0.3em]">Social Systems</h4>
+                    <div class="grid grid-cols-2 gap-2">
+                        <a href="#" class="py-3 border border-white/5 bg-white/5 text-[8px] font-black uppercase text-center tracking-widest hover:bg-white hover:text-black transition-all">Instagram</a>
+                        <a href="#" class="py-3 border border-white/5 bg-white/5 text-[8px] font-black uppercase text-center tracking-widest hover:bg-white hover:text-black transition-all">Twitter</a>
+                    </div>
+                </div>
+            </div>
+            <div class="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-8">
+                <p class="text-[7px] md:text-[8px] font-bold text-white/10 tracking-[0.8em] uppercase">© 2026 Visionary House.</p>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
